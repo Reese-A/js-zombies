@@ -34,7 +34,7 @@ function Item(name) {
  * -----------------------------
  */
 
-function Weapon(name, damage, ) {
+function Weapon(name, damage) {
   Item.call(this, name);
   this.damage = damage;
 }
@@ -98,18 +98,18 @@ function Player(name, health, strength, speed) {
   this.health = health;
   this.strength = strength;
   this.speed = speed;
-  this._pack = [];
-  this._maxHealth = health;
+  var _pack = [];
+  var _maxHealth = health;
   this.isAlive = true;
   this.equipped = false;
+  Player.prototype.getPack = function () {
+    return _pack;
+  }
+  Player.prototype.getMaxHealth = function () {
+    return _maxHealth;
+  }
 }
 
-Player.prototype.getPack = function () {
-  return this._pack;
-}
-Player.prototype.getMaxHealth = function () {
-  return this._maxHealth;
-}
 
 /**
  * Player Class Method => checkPack()
@@ -123,7 +123,7 @@ Player.prototype.getMaxHealth = function () {
  * @name checkPack
  */
 Player.prototype.checkPack = function () {
-  console.log(this.getPack);
+  console.log(this.getPack());
 }
 
 
@@ -285,8 +285,8 @@ Player.prototype.useItem = function (item) {
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
-Player.prototype.equippedWith = function(){
-  if(this.equipped === false){
+Player.prototype.equippedWith = function () {
+  if (this.equipped === false) {
     console.log(this.name + ' has nothing equipped.');
     return false;
   }
@@ -310,12 +310,13 @@ Player.prototype.equippedWith = function(){
  * @property {boolean} isAlive      Default value should be `true`.
  */
 
-function Zombie (health, strength, speed){
+function Zombie(health, strength, speed) {
   this.health = health;
   this.strength = strength;
   this.speed = speed;
-  this._maxHealth = health;
+  var _maxHealth = health;
   this.isAlive = true;
+  Zombie.prototype.getMaxHealth = function(){ return _maxHealth};
 }
 
 /**
@@ -338,7 +339,7 @@ function Zombie (health, strength, speed){
  * FastZombie Extends Zombie Class
  * -----------------------------
  */
-function FastZombie(health,strength,speed){
+function FastZombie(health, strength, speed) {
   Zombie.call(this, health, strength, speed);
 }
 FastZombie.prototype = Object.create(Zombie.prototype);
